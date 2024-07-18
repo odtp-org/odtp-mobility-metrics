@@ -1,4 +1,4 @@
-# Name of the component
+# ODTP Mobility Metrics
 
 >Evaluate mobility behavior using mobility metrics
 
@@ -25,21 +25,26 @@ odtp new component \
 
 | Parameter                 | Description                                                                                                       | Default Value | Options                                |
 |---------------------------|-------------------------------------------------------------------------------------------------------------------|---------------|----------------------------------------|
+| DATASET                   | CSV input filename without format (`.csv`) | dtepr            | Any string                 |
+| ALL_BASIC_METRICS              | Set to TRUE in order to run all combinations of basic metrics available                                                                                  | FALSE         | TRUE, FALSE       |
 | METRICS_TYPE              | Type of metrics to be calculated                                                                                  | BASIC         | BASIC, ENTROPY, MOBILITY_METRICS       |
 | BASIC_METRIC_TYPE         | Type of basic metrics to be calculated: Location visitation frequency, Radius of gyration, Jump length, Wait time | rg            | rg, locf, jump, wait                   |
-| RADIUS_OF_GYRATION_METHOD | Radius of gyration method: 'count' calculates with visitation frequency, 'duration' calculates with activity duration | rg            | duration, count                        |
+| RADIUS_OF_GYRATION_METHOD | Radius of gyration method: 'count' calculates with visitation frequency, 'duration' calculates with activity duration | duration            | duration, count                        |
 
 ### Data Inputs
 
 | File/Folder | Type | Path       | Description                         | Parameter |
 |-------------|------|------------|-------------------------------------|-----------|
-| dtepr.csv   | csv  | dtepr.csv  | Output from odtp-mobility-simulation | null      |
+| dtepr.csv   | csv  | dtepr.csv  | Output from odtp-mobility-simulation. The filename can be modified in DATASET parameter | null      |
 
 ### Data Output
+
+Disclaimer: To complete.
 
 | File/Folder | Type | Path   | Description                       | Parameter |
 |-------------|------|--------|-----------------------------------|-----------|
 | rg.png      | png  | rg.png | Output from basic metrics > rg    | null      |
+| ...      | ...  | ... | ...    | ...      |
 
 
 ## Tutorial
@@ -65,7 +70,14 @@ docker run -it --rm \
 --env-file .env odtp-mobility-metrics
 ```
 
+docker run -it --rm -v ${pwd}/odtp-input:/odtp/odtp-input -v ${pwd}/odtp-output:/odtp/odtp-output --env-file .env odtp-mobility-metrics
+
 ## Changelog
+
+- v0.0.2
+    - Update to mobility-metrics `0.0.1`
+    - Bugs corrected on `app.sh`
+    - Added option to run all metrics
 
 - v0.0.1
     - Initial release

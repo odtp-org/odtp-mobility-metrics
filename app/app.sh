@@ -12,7 +12,7 @@
 
 git clone https://github.com/irmlma/mobility-metrics.git /odtp/odtp-workdir/mobility-metrics
 cd /odtp/odtp-workdir/mobility-metrics
-git checkout 7c1e475940ebf941b788c800685d501d18379c67
+git checkout aebeb821f685eea3d49e3ce2c800627f73488c43
 
 pip install .
 
@@ -26,8 +26,8 @@ pip install .
 #########################################################
 # 3. INPUT FOLDER MANAGEMENT
 #########################################################
-mkdir data
-mkdir data/output
+mkdir /odtp/odtp-workdir/mobility-metrics/data
+mkdir /odtp/odtp-workdir/mobility-metrics/data/output
 
 ln -s /odtp/odtp-input/ /odtp/odtp-workdir/mobility-metrics/data/input
 
@@ -39,28 +39,43 @@ ln -s /odtp/odtp-input/ /odtp/odtp-workdir/mobility-metrics/data/input
 if [ "$METRICS_TYPE" == "BASIC" ]; then
     # Code for BASIC metrics
     echo "Running BASIC metrics"
-    python3 /odtp/odtp-workdir/mobility-metrics/mobmetric/scripts/run_metrics.py --metric $BASIC_METRIC_TYPE --method $RADIUS_OF_GYRATION_METHOD
+    python3 /odtp/odtp-workdir/mobility-metrics/mobmetric/scripts/run_metrics.py $BASIC_METRIC $BASIC_RADIUS_OF_GYRATION_METHOD $DATASET
 
 elif [ "$METRICS_TYPE" == "ENTROPY" ]; then
     # Code for ENTROPY metrics
     echo "Running ENTROPY metrics"
     python3 /odtp/odtp-workdir/mobility-metrics/mobmetric/scripts/run_entropy.py
 
-else [ "$METRICS_TYPE" == "MOBILITY_METRICS" ]; then
+elif [ "$METRICS_TYPE" == "MOBILITY_METRICS" ]; then
     # Code for other metrics
     echo "Running other metrics"
     python3 /odtp/odtp-workdir/mobility-metrics/mobmetric/scripts/run_motifs.py
 
 fi
 
-cd /odtp/odtp-workdir/mobility-metrics
+
+if [ "$ALL_BASIC_METRICS" == "TRUE" ]; then
+    # Code for BASIC metrics
+    echo "Running ALL BASIC metrics"
+
+    for BASIC_METRIC in duration count; do
+        for BASIC_RADIUS_OF_GYRATION_METHOD in  rg locf jump wait; do
+        echo "Running $BASIC_METRIC metric & $BASIC_RADIUS_OF_GYRATION_METHOD method"
+        python3 /odtp/odtp-workdir/mobility-metrics/mobmetric/scripts/run_metrics.py $BASIC_METRIC $BASIC_RADIUS_OF_GYRATION_METHOD $DATASET
+
+        mv /odtp/odtp-workdir/mobility-metrics/data/output/${BASIC_RADIUS_OF_GYRATION_METHOD}.png /odtp/odtp-workdir/mobility-metrics/data/output/basic_${BASIC_METRIC}_${BASIC_RADIUS_OF_GYRATION_METHOD}.png
+        done
+    done
+fi
+
+
 
 #########################################################
 # 5. OUTPUT FOLDER MANAGEMENT
 # The selected output files generated should be placed in the output folder
 #########################################################
 
-cp -r /odtp/odtp-workdir/mobility-metrics/data/output* /odtp/odtp-output
+cp -r /odtp/odtp-workdir/mobility-metrics/data/output/* /odtp/odtp-output
 
 ############################################################################################
 # END OF MANUAL USER APP
