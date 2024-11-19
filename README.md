@@ -13,7 +13,7 @@
 ```
 odtp new component \
 --name odtp-mobility-metrics \
---component-version 0.0.1 \
+--component-version v0.0.3 \
 --repository https://github.com/irmlma/mobility-metrics
 ``` 
 
@@ -73,6 +73,11 @@ docker run -it --rm \
 docker run -it --rm -v ${pwd}/odtp-input:/odtp/odtp-input -v ${pwd}/odtp-output:/odtp/odtp-output --env-file .env odtp-mobility-metrics
 
 ## Changelog
+
+- v0.0.3
+    - Updated component client to v0.1.2
+    - Github actions for docker building
+    - Fix on windows build
 
 - v0.0.2
     - Update to mobility-metrics `0.0.1`

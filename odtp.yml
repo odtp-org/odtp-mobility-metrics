@@ -1,7 +1,7 @@
 # This file should contain basic component information for your component.
 component-name: odtp-mobility-metrics
 component-author: Ye Hong & Carlos Vivar Rios
-component-version: 0.0.1
+component-version: v0.0.3
 component-repository: https://github.com/odtp-org/odtp-mobility-metrics
 component-license: BSD-3-Clause
 component-type: ephemeral
