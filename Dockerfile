@@ -35,8 +35,17 @@ RUN pip install -r /tmp/odtp.requirements.txt
 # PLEASE INSTALL HERE ALL SYSTEM DEPENDENCIES RELATED TO YOUR TOOL
 #######################################################################
 
+# GDAL Setup
+
+RUN apt-get update && \
+    apt-get install -y libgdal-dev && \
+    apt-get clean;
+RUN export CPLUS_INCLUDE_PATH=/usr/include/gdal
+RUN export C_INCLUDE_PATH=/usr/include/gdal
+
 # Installing dependecies from the app
 COPY requirements.txt /tmp/requirements.txt
+RUN pip install --upgrade pip
 RUN pip install -r /tmp/requirements.txt
 
 

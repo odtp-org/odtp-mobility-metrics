@@ -78,6 +78,7 @@ docker run -it --rm -v ${pwd}/odtp-input:/odtp/odtp-input -v ${pwd}/odtp-output:
     - Updated component client to v0.1.2
     - Github actions for docker building
     - Fix on windows build
+    - Added GDAL, rasterio, and fiona as dependencies to solve problem when building for arm64.
 
 - v0.0.2
     - Update to mobility-metrics `0.0.1`
